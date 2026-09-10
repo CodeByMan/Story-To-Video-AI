@@ -1,0 +1,23 @@
+# Supported runtime: CPython 3.13.x
+# These are direct application dependencies. Transitive dependencies are
+# resolved by pip so stale Python 3.11-era pins cannot force source builds.
+
+aiohttp==3.14.3
+deepgram-sdk==3.7.0
+dtw-python==1.7.5
+edge-tts==7.2.8
+elevenlabs==2.66.0
+google-generativeai==0.8.5
+groq==1.7.0
+moviepy==1.0.3
+numba==0.67.0
+numpy==2.5.2
+openai<2,>=1.31.1
+openai-whisper==20250625
+Pillow>=10,<13
+python-dotenv==1.0.1
+requests>=2.32.3,<3
+scipy==1.18.1
+tiktoken==0.14.0
+torch==2.14.0
+whisper-timestamped==1.15.9

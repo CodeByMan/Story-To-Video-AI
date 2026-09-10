@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b63ce" />
+    <meta
+      name="description"
+      content="Story to Video AI turns an English topic into a narrated, captioned video."
+    />
+    <title>Story to Video AI</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Story to Video AI home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m8 5 11 7-11 7V5Z" />
+              <path d="M4 5v14" />
+            </svg>
+          </span>
+          <span>Story to Video <em>AI</em></span>
+        </a>
+        <div class="topbar-actions">
+          <span class="local-badge"><span class="status-dot"></span> Local workspace</span>
+          <a class="docs-link" href="#how-it-works">How it works</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> STORYTELLING, AUTOMATED</p>
+            <h1 id="page-title">Turn an idea into<br /><span>a finished story.</span></h1>
+            <p class="hero-description">
+              Write a topic. Story to Video AI creates the script, voice, captions,
+              visuals, and final MP4 in one focused workflow.
+            </p>
+          </div>
+          <div class="hero-orbit" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="orbit-core"><span>STV</span><i></i></div>
+          </div>
+        </section>
+
+        <section class="workspace-grid" aria-label="Video generation workspace">
+          <article class="panel composer-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">01 / CREATE</p>
+                <h2>What should we tell?</h2>
+              </div>
+              <span class="panel-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 19.5V4.8a1.8 1.8 0 0 1 1.8-1.8H20v14.7H5.8A1.8 1.8 0 0 0 4 19.5Zm0 0A1.8 1.8 0 0 0 5.8 21H20" />
+                  <path d="M8 7h8M8 11h8" />
+                </svg>
+              </span>
+            </div>
+
+            <form id="generate-form" novalidate>
+              <label for="topic">Your topic</label>
+              <div class="textarea-wrap">
+                <textarea
+                  id="topic"
+                  name="topic"
+                  rows="5"
+                  maxlength="500"
+                  required
+                  placeholder="e.g. How the world's great bridges changed modern cities"
+                ></textarea>
+                <span id="character-count" class="character-count">0 / 500</span>
+              </div>
+              <p class="field-hint">Use an English topic about any country, subject, or idea.</p>
+
+              <div class="example-row" aria-label="Example topics">
+                <span>Try an example</span>
+                <button type="button" class="example-chip" data-topic="The story of India's space program">India's space program</button>
+                <button type="button" class="example-chip" data-topic="The Eiffel Tower and the making of modern Paris">Modern Paris</button>
+                <button type="button" class="example-chip" data-topic="How Saudi Arabia is building new desert cities">Desert cities</button>
+              </div>
+
+              <button id="generate-button" class="primary-button" type="submit">
+                <span class="button-label">Generate video</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+                <svg class="button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h13M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            </form>
+
+            <div class="trust-row">
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 5 6v5c0 4.6 2.9 8.2 7 10 4.1-1.8 7-5.4 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg> Local processing control</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg> Any topic, any place</span>
+            </div>
+          </article>
+
+          <article class="panel preview-panel">
+            <div class="panel-heading preview-heading">
+              <div>
+                <p class="panel-kicker">02 / PREVIEW</p>
+                <h2>Your video</h2>
+              </div>
+              <span id="job-status" class="status-pill idle">Waiting</span>
+            </div>
+
+            <div id="preview-empty" class="preview-empty">
+              <div class="preview-placeholder">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                  <rect x="5" y="8" width="38" height="32" rx="5" />
+                  <path d="m20 18 11 6-11 6v-12Z" />
+                </svg>
+              </div>
+              <h3>Your generated story will appear here</h3>
+              <p>Enter a topic to start the local AI video pipeline.</p>
+            </div>
+
+            <div id="video-result" class="video-result hidden">
+              <video id="video-player" controls preload="metadata"></video>
+              <div class="result-footer">
+                <div>
+                  <p class="result-label">READY TO WATCH</p>
+                  <p id="result-topic" class="result-topic"></p>
+                </div>
+                <a id="download-link" class="download-button" href="#" download>
+                  Download MP4
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" /></svg>
+                </a>
+              </div>
+            </div>
+
+            <div id="progress-panel" class="progress-panel hidden" aria-live="polite">
+              <div class="progress-topline">
+                <span id="progress-title">Preparing your story</span>
+                <span id="progress-percent">0%</span>
+              </div>
+              <div class="progress-track"><span id="progress-bar"></span></div>
+              <div class="pipeline-steps">
+                <div class="pipeline-step active" data-step="queued"><span>01</span><b>Queue</b></div>
+                <div class="pipeline-step" data-step="script"><span>02</span><b>Script</b></div>
+                <div class="pipeline-step" data-step="voice"><span>03</span><b>Voice</b></div>
+                <div class="pipeline-step" data-step="render"><span>04</span><b>Render</b></div>
+              </div>
+            </div>
+
+            <div id="error-panel" class="error-panel hidden" role="alert">
+              <div class="error-mark">!</div>
+              <div><strong>Generation could not finish</strong><p id="error-message"></p></div>
+              <button id="retry-button" type="button">Try again</button>
+            </div>
+          </article>
+        </section>
+
+        <section id="how-it-works" class="how-section" aria-labelledby="how-title">
+          <div class="section-intro">
+            <p class="panel-kicker">03 / THE PIPELINE</p>
+            <h2 id="how-title">From words to motion.</h2>
+          </div>
+          <div class="flow-list">
+            <div class="flow-item"><span class="flow-number">01</span><div><strong>Shape the story</strong><p>An LLM turns your topic into a concise script.</p></div></div>
+            <div class="flow-item"><span class="flow-number">02</span><div><strong>Find the voice</strong><p>Text-to-speech creates narration, then speech recognition times the captions.</p></div></div>
+            <div class="flow-item"><span class="flow-number">03</span><div><strong>Build the scene</strong><p>Visual search and MoviePy assemble the final short-form video.</p></div></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Story to Video AI</span>
+        <span>Built by Muhammad Ali Nawaz · 2026</span>
+      </footer>
+    </div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
